@@ -31,6 +31,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final botToastBuilder = BotToastInit();
+
   @override
   Widget build(BuildContext ctx) {
     return ScreenUtilInit(
@@ -44,7 +46,16 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
           scrollBehavior: MyScrollBehavior(),
-          builder: BotToastInit(),
+          builder: (BuildContext context, Widget? child) {
+            child = botToastBuilder(context, child);
+            child = MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaleFactor: 1.0,
+              ),
+              child: child,
+            );
+            return child;
+          },
           home: const HomeScreen(),
         );
       },
